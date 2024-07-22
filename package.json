@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon app.js",
-    "start": "MONGO_DB_URL=url SESSION_SECRET=secret node app.js"
+    "start": "node app.js"
   },
   "author": "ecr",
   "license": "ISC",
