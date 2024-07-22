@@ -1,0 +1,44 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+  <%- include('../includes/navigation.ejs') %>
+
+  <main>
+     <% if(locals.errorMessage) { %>
+     <div class="user-message user-message--error"><%= errorMessage %></div>
+    <% } %>
+
+    <form class="product-form" action="/admin/<%= locals.editing ? 'edit-product' : 'add-product' %>" method="POST" enctype="multipart/form-data">
+      <div class="form-control">
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" 
+          value="<%= (locals.editing || locals.hasError) ? product.title : '' %>"
+          class="<%= locals.hasError && (validationErrors.find(e => e.path === 'title') ? 'invalid' : '' ) %>">
+      </div>
+      <div class="form-control">
+        <label for="image">Image URL</label>
+        <input type="file" name="image" id="image" 
+          class="<%= locals.hasError && (validationErrors.find(e => e.path === 'image') ? 'invalid' : '' ) %>">
+      </div>
+      <div class="form-control">
+        <label for="price">Price</label>
+        <input type="number" name="price" id="price" step="0.01" 
+          value="<%= (locals.editing || locals.hasError) ? product.price : '' %>"
+          class="<%= locals.hasError && (validationErrors.find(e => e.path === 'price') ? 'invalid' : '' ) %>">
+      </div>
+      <div class="form-control" >
+        <label for="description">Description</label>
+        <textarea name="description" id="description" rows="5" class="<%= locals.hasError && (validationErrors.find(e => e.path === 'description') ? 'invalid' : '' ) %>"><%= (locals.editing || locals.hasError) ? product.description.toString().trim() : '' %></textarea>
+      </div>
+      <% if (locals.editing) { %>
+        <input type="hidden" value="<%= product._id %>" name="productId">
+      <% } %>
+      
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button class="btn" type="submit"><%= locals.editing ? 'Update Product' : 'Add Product' %> </button>
+    </form>
+  </main>
+<%- include('../includes/end.ejs') %>

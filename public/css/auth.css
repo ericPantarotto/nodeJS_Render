@@ -1,0 +1,13 @@
+.login-form,
+.reset-form {
+  width: 20rem;
+  max-width: 90%;
+  margin: auto;
+  display: block;
+}
+
+.container-login {
+  display: flex;
+  align-content: flex-end;
+  justify-content: space-between;
+}
